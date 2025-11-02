@@ -1,62 +1,24 @@
 @import "tailwindcss";
 
-@theme {
-  --color-pastel-green-50: #f1fcf3;
-  --color-pastel-green-100: #defae4;
-  --color-pastel-green-200: #c0f2ca;
-  --color-pastel-green-300: #8ee7a2;
-  --color-pastel-green-400: #6ed987;
-  --color-pastel-green-500: #2fb84f;
-  --color-pastel-green-600: #21983d;
-  --color-pastel-green-700: #1d7833;
-  --color-pastel-green-800: #1c5f2c;
-  --color-pastel-green-900: #194e27;
-  --color-pastel-green-950: #082b12;
-
-  --color-wild-sand-50: #f6f6f6;
-  --color-wild-sand-100: #efefef;
-  --color-wild-sand-200: #dcdcdc;
-  --color-wild-sand-300: #bdbdbd;
-  --color-wild-sand-400: #989898;
-  --color-wild-sand-500: #7c7c7c;
-  --color-wild-sand-600: #656565;
-  --color-wild-sand-700: #525252;
-  --color-wild-sand-800: #464646;
-  --color-wild-sand-900: #3d3d3d;
-  --color-wild-sand-950: #292929;
-}
-
+/* Keep index.css minimal so Tailwind compiles cleanly and theme stays in App.css */
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
-  color-scheme: light;
   color: #3d3d3d;
   background-color: #f6f6f6;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-  font-weight: 500;
-  color: #21983d;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #1d7833;
-}
-
 body {
   margin: 0;
-  min-width: 320px;
-  min-height: 100vh;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  font-family: "Inter", system-ui, sans-serif;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+a {
+  text-decoration: none;
 }

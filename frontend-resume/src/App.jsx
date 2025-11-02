@@ -6,13 +6,11 @@ import AnalysePage from "./Pages/AnalysePage";
 const App = () => {
   return (
     <Router>
-      <div>
-        <Routes>
-          <Route path="/" element={<FileUploadPage />} />
-          <Route path="/upload" element={<FileUploadPage />} />
-          <Route path="/analyze" element={<AnalysePage />} />
-        </Routes>
-      </div>
+      <Routes>
+        <Route path="/" element={<FileUploadPage />} />
+        <Route path="/upload" element={<FileUploadPage />} />
+        <Route path="/analyze" element={<AnalysePage />} />
+      </Routes>
     </Router>
   );
 };
