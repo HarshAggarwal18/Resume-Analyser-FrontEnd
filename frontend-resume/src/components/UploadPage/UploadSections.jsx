@@ -79,163 +79,186 @@ const UploadSections = () => {
   };
 
   return (
-    <section className="bg-[#0b0c10] text-[#c5c6c7] py-20 px-8">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        {/* Hero Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="space-y-6"
-        >
-          <h1 className="text-5xl font-extrabold text-[#66fcf1] leading-tight">
-            AI Resume <span className="text-[#45a29e]">Analyzer</span>
-          </h1>
-
-          <p className="text-lg text-[#c5c6c7]/80 max-w-md">
-            Transform your resume into actionable insights. Get instant match
-            scores, missing skills, and personalized suggestions powered by our
-            AI engine.
-          </p>
-
-          <div className="flex items-center space-x-4">
-            <a
-              href="#upload"
-              className="bg-[#45a29e] hover:bg-[#66fcf1] text-white font-semibold px-5 py-2.5 rounded-lg transition-all shadow-md"
-            >
-              Upload Resume
-            </a>
-            <div className="text-sm text-[#c5c6c7]/70 leading-tight">
-              <div>Fast · Secure · Private</div>
-              <div>Average Analysis Time: ~20s</div>
+    <div className="app-bg">
+      <div className="container">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+          {/* Left: Hero */}
+          <div className="space-y-6 px-4 lg:px-0">
+            <h1 className="text-5xl font-extrabold leading-tight text-white">
+              AI Resume Analyzer
+            </h1>
+            <p className="text-lg text-slate-200 max-w-xl">
+              Turn your resume into actionable insights. Get job-match scores,
+              missing skills and tailored suggestions powered by our AI engine.
+            </p>
+            <div className="flex items-center space-x-4">
+              <a
+                className="inline-flex items-center px-5 py-3 bg-linear-to-r from-indigo-500 to-sky-400 text-white rounded-lg shadow-lg hover:scale-105 transition-transform font-medium"
+                href="#upload"
+              >
+                Upload Resume
+              </a>
+              <div className="text-sm text-slate-300">
+                <div>Fast. Secure. Insightful.</div>
+                <div className="mt-1">Estimated analysis ~20s</div>
+              </div>
+            </div>
+            <div className="mt-6 text-sm text-slate-400 max-w-md">
+              <strong className="text-slate-200">Pro tip:</strong> Use a PDF or
+              DOCX resume for best results. Large files may take longer.
             </div>
           </div>
 
-          <ul className="mt-8 grid grid-cols-2 sm:grid-cols-3 gap-3 text-sm text-[#c5c6c7]/80">
-            {[
-              "AI-Powered Insights",
-              "Skill Gap Detection",
-              "Smart Scoring",
-              "Growth Recommendations",
-              "Instant Feedback",
-              "Career Optimization",
-            ].map((feature, i) => (
-              <li
-                key={i}
-                className="flex items-center gap-2 bg-[#1f2833]/60 border border-[#45a29e]/20 rounded-md px-3 py-2 hover:border-[#66fcf1]/40 transition"
-              >
-                <span className="text-[#66fcf1]">✔</span> {feature}
-              </li>
-            ))}
-          </ul>
-        </motion.div>
-
-        {/* Upload Card */}
-        <motion.div
-          id="upload"
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3, duration: 0.6 }}
-          className="flex justify-center"
-        >
-          <div
-            className={`w-full max-w-md rounded-2xl p-6 border ${
-              isDragging
-                ? "border-[#66fcf1]/70 bg-[#1f2833]/80"
-                : "border-[#45a29e]/30 bg-[#1f2833]"
-            } shadow-lg transition-all`}
-            onDragOver={handleDragOver}
-            onDragLeave={handleDragLeave}
-            onDrop={handleDrop}
-          >
-            <div className="text-center space-y-6">
-              {/* Upload States */}
-              {!selectedFile ? (
-                <>
-                  <div className="text-[#66fcf1] flex justify-center">
-                    <svg
-                      width="42"
-                      height="42"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="1.4"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                      />
-                    </svg>
+          {/* Right: Upload Card */}
+          <div id="upload" className="px-4 lg:px-0">
+            <div className="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 shadow-2xl">
+              <div className="absolute -inset-1 rounded-2xl bg-linear-to-r from-indigo-500 to-sky-400 opacity-10 blur-2xl"></div>
+              <div className="relative">
+                <div className="flex items-center justify-between mb-4">
+                  <div>
+                    <h3 className="text-xl font-semibold text-white">
+                      Upload your resume
+                    </h3>
+                    <p className="text-sm text-slate-300">
+                      Supported: PDF, DOC, DOCX
+                    </p>
                   </div>
-                  <p className="text-[#c5c6c7]/80">Drag & drop or</p>
-                  <label className="cursor-pointer bg-[#45a29e] hover:bg-[#66fcf1] text-[#0b0c10] font-semibold px-4 py-2 rounded-lg transition-all inline-block">
-                    Choose File
-                    <input
-                      type="file"
-                      accept=".pdf,.doc,.docx"
-                      onChange={handleFileChange}
-                      className="hidden"
-                    />
-                  </label>
-                  <p className="text-xs text-[#c5c6c7]/60">
-                    Supported: PDF, DOC, DOCX
-                  </p>
-                </>
-              ) : isUploading ? (
-                <>
-                  <div className="w-16 h-16 border-4 border-t-transparent border-[#66fcf1] rounded-full animate-spin mx-auto"></div>
-                  <p className="text-lg font-semibold">Analyzing Resume...</p>
-                  <p className="text-sm text-[#c5c6c7]/70">
-                    Please wait a few seconds.
-                  </p>
-                  <div className="w-full h-2 bg-[#0b0c10] rounded-full overflow-hidden">
-                    <div
-                      className="h-full bg-gradient-to-r from-[#45a29e] to-[#66fcf1] transition-all duration-300"
-                      style={{ width: `${uploadProgress}%` }}
-                    />
+                  <div className="text-sm text-slate-400">Secure · Private</div>
+                </div>
+                <div
+                  className={`relative rounded-xl border-2 border-dashed transition-all duration-300 p-6 ${
+                    isDragging
+                      ? "border-sky-400 bg-white/3"
+                      : "border-white/6 hover:border-sky-300"
+                  }`}
+                  onDragOver={handleDragOver}
+                  onDragLeave={handleDragLeave}
+                  onDrop={handleDrop}
+                >
+                  <div className="text-center">
+                    {!selectedFile ? (
+                      <>
+                        <div className="mx-auto w-14 h-14 bg-white/6 rounded-lg flex items-center justify-center mb-4">
+                          <svg
+                            className="w-7 h-7 text-white"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                            />
+                          </svg>
+                        </div>
+                        <p className="text-base text-slate-200 mb-2">
+                          Drag & drop or
+                        </p>
+                        <label className="inline-flex items-center px-4 py-2 bg-slate-700 text-white rounded-lg cursor-pointer hover:scale-105 transition-transform">
+                          Choose File
+                          <input
+                            type="file"
+                            accept=".pdf,.doc,.docx"
+                            onChange={handleFileChange}
+                            className="hidden"
+                          />
+                        </label>
+                      </>
+                    ) : isUploading ? (
+                      <div className="space-y-4">
+                        <div className="flex items-center justify-center">
+                          <div className="w-14 h-14 border-4 border-slate-600 border-t-sky-400 rounded-full animate-spin"></div>
+                        </div>
+                        <div>
+                          <p className="text-lg font-semibold text-white mb-1">
+                            Analyzing Resume...
+                          </p>
+                          <p className="text-sm text-slate-300 mb-2">
+                            This can take ~20 seconds depending on file size and
+                            server load. Please wait.
+                          </p>
+                          <div className="w-full bg-white/10 rounded-full h-2.5 mb-2">
+                            <div
+                              className="bg-sky-400 h-2.5 rounded-full transition-all duration-300"
+                              style={{ width: `${uploadProgress}%` }}
+                            ></div>
+                          </div>
+                          <p className="text-sm text-slate-400">
+                            {uploadProgress}% Complete
+                          </p>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="space-y-4">
+                        <div className="flex items-center justify-center">
+                          <div className="w-14 h-14 bg-white/6 rounded-full flex items-center justify-center ring-2 ring-white/10">
+                            <svg
+                              className="w-8 h-8 text-white"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                              />
+                            </svg>
+                          </div>
+                        </div>
+                        <div>
+                          <p className="text-lg font-semibold text-white mb-1">
+                            {selectedFile.name}
+                          </p>
+                          <p className="text-sm text-slate-300 mb-4">
+                            {(selectedFile.size / 1024 / 1024).toFixed(2)} MB
+                          </p>
+                          <div className="flex justify-center space-x-3">
+                            <button
+                              onClick={() => {
+                                setSelectedFile(null);
+                                setError(null);
+                              }}
+                              disabled={isUploading}
+                              className="px-4 py-2 bg-white/6 text-white rounded-lg hover:bg-white/10"
+                            >
+                              Change
+                            </button>
+                            <button
+                              onClick={handleUpload}
+                              disabled={isUploading}
+                              className="px-4 py-2 bg-linear-to-r from-indigo-500 to-sky-400 text-white rounded-lg shadow"
+                            >
+                              Analyze Resume
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
-                  <p className="text-sm text-[#c5c6c7]/70">
-                    {uploadProgress}% Complete
-                  </p>
-                </>
-              ) : (
-                <>
-                  <div className="text-[#66fcf1] mb-2 text-lg font-semibold">
-                    {selectedFile.name}
+                </div>
+                {/* Error Message inside card to match theme */}
+                {error && (
+                  <div className="mt-4 bg-red-800/20 border border-red-700/30 rounded-lg p-3">
+                    <div className="flex items-start">
+                      <div className="ml-2">
+                        <p className="text-sm font-semibold text-red-200">
+                          Error
+                        </p>
+                        <p className="text-sm text-red-100">{error}</p>
+                      </div>
+                    </div>
                   </div>
-                  <p className="text-sm text-[#c5c6c7]/60 mb-4">
-                    {(selectedFile.size / 1024 / 1024).toFixed(2)} MB
-                  </p>
-                  <div className="flex justify-center gap-3">
-                    <button
-                      onClick={() => setSelectedFile(null)}
-                      className="border border-[#45a29e]/40 text-[#66fcf1] px-4 py-2 rounded-lg hover:bg-[#45a29e]/10 transition-all"
-                    >
-                      Change
-                    </button>
-                    <button
-                      onClick={handleUpload}
-                      className="bg-[#45a29e] hover:bg-[#66fcf1] text-[#0b0c10] font-semibold px-4 py-2 rounded-lg transition-all"
-                    >
-                      Analyze Resume
-                    </button>
-                  </div>
-                </>
-              )}
-            </div>
-
-            {/* Error Message */}
-            {error && (
-              <div className="mt-5 bg-red-900/30 border border-red-700/50 text-red-200 rounded-lg p-3 text-sm text-left">
-                <strong className="text-red-300 block mb-1">Error:</strong>
-                {error}
+                )}
               </div>
-            )}
+            </div>
           </div>
         </motion.div>
       </div>
-    </section>
+    </div>
   );
 };
 
