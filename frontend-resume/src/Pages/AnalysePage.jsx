@@ -36,12 +36,12 @@ const AnalysePage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-wild-sand-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="page-bg py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center justify-center h-96">
             <div className="text-center">
-              <div className="w-16 h-16 border-4 border-pastel-green-200 border-t-pastel-green-600 rounded-full animate-spin mx-auto mb-4"></div>
-              <p className="text-lg text-wild-sand-700 font-mono">
+              <div className="w-16 h-16 rounded-full skeleton mx-auto mb-4"></div>
+              <p className="text-lg text-[var(--color-wild-sand-700)] font-semibold">
                 Loading Analysis...
               </p>
             </div>
@@ -53,12 +53,12 @@ const AnalysePage = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-wild-sand-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="page-bg py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
-          <div className="bg-red-50 border border-red-200 rounded-lg p-6 mt-8">
-            <div className="flex items-start">
+          <div className="bg-[var(--color-wild-sand-50)] border border-[var(--color-wild-sand-200)] rounded-lg p-6 mt-8">
+            <div className="flex items-start gap-4">
               <svg
-                className="w-5 h-5 text-red-600 mr-2 shrink-0 mt-0.5"
+                className="w-5 h-5 text-[var(--color-bright-sun-600)] mr-2 shrink-0 mt-0.5"
                 fill="currentColor"
                 viewBox="0 0 20 20"
               >
@@ -69,11 +69,15 @@ const AnalysePage = () => {
                 />
               </svg>
               <div>
-                <p className="text-sm font-semibold text-red-800">Error</p>
-                <p className="text-sm text-red-700">{error}</p>
+                <p className="text-sm font-semibold text-[var(--color-wild-sand-800)]">
+                  Error
+                </p>
+                <p className="text-sm text-[var(--color-wild-sand-700)]">
+                  {error}
+                </p>
                 <button
                   onClick={() => navigate("/")}
-                  className="mt-4 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+                  className="mt-4 btn-accent"
                 >
                   Back to Upload
                 </button>
@@ -87,16 +91,13 @@ const AnalysePage = () => {
 
   if (!analysisData) {
     return (
-      <div className="min-h-screen bg-wild-sand-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="page-bg py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mt-20">
-            <p className="text-lg text-wild-sand-700 font-mono mb-4">
+            <p className="text-lg text-[var(--color-wild-sand-700)] font-semibold mb-4">
               No analysis data available
             </p>
-            <button
-              onClick={() => navigate("/")}
-              className="px-6 py-2.5 bg-pastel-green-600 text-white font-medium rounded-lg hover:bg-pastel-green-700 transition-colors"
-            >
+            <button onClick={() => navigate("/")} className="btn-accent">
               Upload Resume
             </button>
           </div>
@@ -106,12 +107,12 @@ const AnalysePage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-slate-900 via-indigo-900 to-sky-800 text-slate-100 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="page-bg py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <div className="mb-10">
           <button
             onClick={() => navigate("/")}
-            className="inline-flex items-center text-slate-200 hover:text-white mb-4 font-mono"
+            className="inline-flex items-center text-[var(--color-wild-sand-700)] hover:text-[var(--color-wild-sand-900)] mb-4"
           >
             <svg
               className="w-5 h-5 mr-2"
@@ -128,109 +129,187 @@ const AnalysePage = () => {
             </svg>
             Back to Upload
           </button>
-          <h1 className="text-4xl font-extrabold bg-linear-to-r from-indigo-400 to-sky-300 bg-clip-text text-transparent mb-2">
+          <h1 className="text-4xl font-extrabold text-[var(--color-wild-sand-900)] mb-2">
             Resume Analysis Results
           </h1>
-          <p className="text-lg text-slate-300 font-mono">
+          <p className="text-lg text-[var(--color-wild-sand-600)]">
             Detailed insights about your resume
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 gap-6">
           {analysisData &&
-            analysisData.map((job, index) => (
-              <div
-                key={index}
-                className="relative rounded-2xl overflow-hidden shadow-2xl"
-              >
-                <div className="absolute inset-0 bg-linear-to-r from-indigo-600 to-sky-500 opacity-10 blur-lg"></div>
-                <div className="relative bg-white/5 p-6 lg:p-8">
-                  <div className="flex items-start justify-between mb-4">
-                    <div>
-                      <h3 className="text-xl font-semibold text-white">
-                        {job.title || "Position"}
-                      </h3>
-                      <div className="text-sm text-slate-300">
+            analysisData.map((job, index) => {
+              const overall = Math.round((job.matchScore?.overall ?? 0) * 100);
+              const skills = Math.round(
+                (job.matchScore?.skillsMatch ?? 0) * 100
+              );
+              return (
+                <div key={index} className="analysis-card-strong">
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "flex-start",
+                      gap: "1rem",
+                    }}
+                  >
+                    <div style={{ flex: 1 }}>
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: ".75rem",
+                          marginBottom: ".25rem",
+                        }}
+                      >
+                        <h3
+                          style={{
+                            margin: 0,
+                            fontSize: "1.125rem",
+                            fontWeight: 700,
+                            color: "inherit",
+                          }}
+                        >
+                          {job.title || "Position"}
+                        </h3>
+                        <div className="job-badge">{job.employmentType}</div>
+                      </div>
+                      <div className="muted" style={{ marginBottom: ".75rem" }}>
                         {job.company} · {job.location}
                       </div>
-                    </div>
-                    <div className="text-sm text-slate-200">
-                      {job.employmentType}
-                    </div>
-                  </div>
 
-                  <div className="mb-6 grid grid-cols-2 gap-4">
-                    <div className="bg-white/6 rounded-lg p-4">
-                      <div className="text-center">
-                        <div className="text-3xl font-bold text-white mb-1">
-                          {(job.matchScore?.overall * 100).toFixed(0)}%
-                        </div>
-                        <div className="text-sm text-slate-300">
-                          Overall Match
-                        </div>
-                      </div>
-                    </div>
-                    <div className="bg-white/6 rounded-lg p-4">
-                      <div className="text-center">
-                        <div className="text-3xl font-bold text-white mb-1">
-                          {(job.matchScore?.skillsMatch * 100).toFixed(0)}%
-                        </div>
-                        <div className="text-sm text-slate-300">
-                          Skills Match
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {job.missingSkills && job.missingSkills.length > 0 && (
-                    <div className="mb-4">
-                      <h4 className="text-sm font-semibold text-slate-200 mb-2">
-                        Missing Skills
-                      </h4>
-                      <div className="flex flex-wrap gap-2">
-                        {job.missingSkills.map((skill, idx) => (
-                          <span
-                            key={idx}
-                            className="px-3 py-1 bg-red-800/30 text-red-200 rounded-lg text-sm"
+                      <div
+                        style={{
+                          display: "grid",
+                          gridTemplateColumns: "1fr 1fr",
+                          gap: ".75rem",
+                          marginBottom: ".75rem",
+                        }}
+                      >
+                        <div>
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                              alignItems: "center",
+                              marginBottom: ".4rem",
+                            }}
                           >
-                            {skill}
-                          </span>
-                        ))}
+                            <div className="muted">Overall Match</div>
+                            <div className="metric-pill">{overall}%</div>
+                          </div>
+                          <div className="score-bar-wrap">
+                            <div
+                              className="score-bar"
+                              style={{ width: `${overall}%` }}
+                            />
+                          </div>
+                        </div>
+                        <div>
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                              alignItems: "center",
+                              marginBottom: ".4rem",
+                            }}
+                          >
+                            <div className="muted">Skills Match</div>
+                            <div className="metric-pill">{skills}%</div>
+                          </div>
+                          <div className="score-bar-wrap">
+                            <div
+                              className="score-bar"
+                              style={{ width: `${skills}%` }}
+                            />
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  )}
 
-                  {job.whyFit && (
-                    <div className="mb-4">
-                      <h4 className="text-sm font-semibold text-slate-200 mb-2">
-                        Why You Fit
-                      </h4>
-                      <p className="text-sm text-slate-300">{job.whyFit}</p>
+                      {job.summary && (
+                        <div
+                          style={{
+                            marginTop: ".5rem",
+                            marginBottom: ".5rem",
+                            background: "rgba(255,255,255,0.02)",
+                            padding: ".75rem",
+                            borderRadius: ".5rem",
+                          }}
+                        >
+                          <div
+                            style={{ fontWeight: 700, marginBottom: ".35rem" }}
+                          >
+                            Summary
+                          </div>
+                          <div className="muted">{job.summary}</div>
+                        </div>
+                      )}
                     </div>
-                  )}
 
-                  {job.growthAreas && (
-                    <div className="mb-4">
-                      <h4 className="text-sm font-semibold text-slate-200 mb-2">
-                        Growth Areas
-                      </h4>
-                      <p className="text-sm text-slate-300">
-                        {job.growthAreas}
-                      </p>
-                    </div>
-                  )}
+                    <div style={{ width: "220px", flexShrink: 0 }}>
+                      {job.missingSkills && job.missingSkills.length > 0 && (
+                        <div style={{ marginBottom: ".75rem" }}>
+                          <div
+                            style={{ fontWeight: 700, marginBottom: ".4rem" }}
+                          >
+                            Missing Skills
+                          </div>
+                          <div
+                            style={{
+                              display: "flex",
+                              flexWrap: "wrap",
+                              gap: ".4rem",
+                            }}
+                          >
+                            {job.missingSkills.map((s, i) => (
+                              <span
+                                key={i}
+                                style={{
+                                  padding: ".25rem .5rem",
+                                  borderRadius: ".375rem",
+                                  background: "rgba(255,85,85,0.06)",
+                                  color: "var(--color-wild-sand-50)",
+                                  fontSize: ".85rem",
+                                }}
+                              >
+                                {s}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
 
-                  {job.summary && (
-                    <div className="mt-4 bg-white/6 rounded-lg p-4">
-                      <h4 className="text-sm font-semibold text-slate-200 mb-2">
-                        Summary
-                      </h4>
-                      <p className="text-sm text-slate-300">{job.summary}</p>
+                      {job.whyFit && (
+                        <div style={{ marginBottom: ".6rem" }}>
+                          <div
+                            style={{ fontWeight: 700, marginBottom: ".35rem" }}
+                          >
+                            Why You Fit
+                          </div>
+                          <div className="muted" style={{ fontSize: ".95rem" }}>
+                            {job.whyFit}
+                          </div>
+                        </div>
+                      )}
+
+                      {job.growthAreas && (
+                        <div>
+                          <div
+                            style={{ fontWeight: 700, marginBottom: ".35rem" }}
+                          >
+                            Growth Areas
+                          </div>
+                          <div className="muted" style={{ fontSize: ".95rem" }}>
+                            {job.growthAreas}
+                          </div>
+                        </div>
+                      )}
                     </div>
-                  )}
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
         </div>
       </div>
     </div>

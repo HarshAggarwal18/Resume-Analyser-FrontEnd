@@ -1,5 +1,234 @@
 @import "tailwindcss";
 #root {
+  --color-bright-sun-50: #fffbeb;
+  --color-bright-sun-100: #fff3c6;
+  --color-bright-sun-200: #ffe588;
+  --color-bright-sun-300: #ffd149;
+  --color-bright-sun-400: #ffbd20;
+  --color-bright-sun-500: #f99b07;
+  --color-bright-sun-600: #dd7302;
+  --color-bright-sun-700: #b75006;
+  --color-bright-sun-800: #943c0c;
+  --color-bright-sun-900: #7a330d;
+  --color-bright-sun-950: #461902;
+
+  --color-wild-sand-50: #f6f6f6;
+  --color-wild-sand-100: #efefef;
+  --color-wild-sand-200: #dcdcdc;
+  --color-wild-sand-300: #bdbdbd;
+  --color-wild-sand-400: #989898;
+  --color-wild-sand-500: #7c7c7c;
+  --color-wild-sand-600: #656565;
+  --color-wild-sand-700: #525252;
+  --color-wild-sand-800: #464646;
+  --color-wild-sand-900: #3d3d3d;
+  --color-wild-sand-950: #292929;
+}
+
+/* Tailwind component layer: reusable UI patterns for the Bright Sun / Wild Sand theme */
+@layer components {
+  .page-bg {
+    background-color: var(--color-wild-sand-50);
+    color: var(--color-wild-sand-900);
+    min-height: 100vh;
+  }
+
+  .header-bar {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.04);
+    background-color: var(--color-wild-sand-100);
+  }
+
+  .btn-accent {
+    background-color: var(--color-bright-sun-500);
+    color: white;
+    padding: 0.5rem 0.9rem;
+    border-radius: 1rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+  }
+  .btn-accent:hover {
+    background-color: var(--color-bright-sun-600);
+  }
+
+  .upload-card {
+    border: 2px dashed var(--color-bright-sun-300);
+    background-color: var(--color-wild-sand-50);
+    border-radius: 1rem;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04) inset;
+    transition: all 0.3s ease;
+  }
+  .upload-card:hover {
+    background-color: var(--color-wild-sand-100);
+  }
+  .upload-card .icon-wrap {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: linear-gradient(
+      180deg,
+      var(--color-bright-sun-50),
+      var(--color-bright-sun-100)
+    );
+    box-shadow: 0 6px 20px rgba(249, 155, 7, 0.08);
+  }
+
+  .analysis-card {
+    background-color: var(--color-wild-sand-100);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+  }
+  .analysis-card:hover {
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.09);
+    transform: translateY(-4px);
+  }
+
+  /* improved dark-friendly analysis card variations and metrics */
+  .analysis-card-strong {
+    background: linear-gradient(
+      180deg,
+      rgba(15, 23, 42, 0.6),
+      rgba(8, 10, 14, 0.65)
+    );
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    color: var(--color-wild-sand-50);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 12px 30px rgba(2, 6, 23, 0.6);
+  }
+  .analysis-card-strong::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+      90deg,
+      rgba(255, 189, 32, 0.06),
+      rgba(33, 150, 243, 0.03)
+    );
+    mix-blend-mode: overlay;
+  }
+
+  .metric-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.6rem;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    background: rgba(255, 189, 32, 0.08);
+    color: var(--color-bright-sun-600);
+  }
+
+  .score-bar-wrap {
+    background: rgba(255, 255, 255, 0.04);
+    height: 10px;
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .score-bar {
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      var(--color-bright-sun-400),
+      var(--color-bright-sun-600)
+    );
+    width: 0%;
+    transition: width 0.4s ease;
+  }
+
+  .job-badge {
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.5rem;
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--color-wild-sand-50);
+    font-weight: 600;
+    font-size: 0.85rem;
+  }
+
+  /* Dark mode via prefers-color-scheme */
+  @media (prefers-color-scheme: dark) {
+    .page-bg {
+      background-color: var(--color-wild-sand-950);
+      color: var(--color-wild-sand-50);
+    }
+    .header-bar {
+      background-color: rgba(10, 11, 13, 0.5);
+      box-shadow: 0 8px 24px rgba(2, 6, 23, 0.6);
+    }
+    .upload-card {
+      background-color: rgba(8, 10, 14, 0.45);
+      border-color: rgba(255, 189, 32, 0.12);
+      box-shadow: 0 8px 24px rgba(2, 6, 23, 0.6) inset;
+    }
+    .analysis-card {
+      background-color: rgba(8, 10, 14, 0.5);
+      box-shadow: 0 10px 30px rgba(2, 6, 23, 0.6);
+      color: var(--color-wild-sand-50);
+    }
+    .analysis-card-strong {
+      background: linear-gradient(
+        180deg,
+        rgba(6, 7, 10, 0.85),
+        rgba(3, 5, 7, 0.85)
+      );
+    }
+    .muted {
+      color: rgba(255, 255, 255, 0.65);
+    }
+    .btn-accent {
+      box-shadow: 0 8px 24px rgba(221, 115, 2, 0.12);
+    }
+  }
+
+  .ai-list-item {
+    border-left: 4px solid var(--color-bright-sun-500);
+    padding-left: 1rem;
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
+    transition: background 0.18s ease;
+  }
+  .ai-list-item:hover {
+    background: var(--color-wild-sand-100);
+  }
+
+  .skeleton {
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.6) 0%,
+      rgba(255, 255, 255, 0.2) 50%,
+      rgba(255, 255, 255, 0.6) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.4s linear infinite;
+    border-radius: 0.5rem;
+  }
+  @keyframes shimmer {
+    from {
+      background-position: 200% 0;
+    }
+    to {
+      background-position: -200% 0;
+    }
+  }
+}
+#root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
